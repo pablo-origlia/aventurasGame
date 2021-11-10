@@ -12,17 +12,28 @@ object nivelBloques {
     game.addVisual(new Fondo(image = "fondoCompleto.png"))
       // otros visuals, p.ej. bloques o llaves
     game.addVisual(new Bloque(position = game.at(3, 12)))
+    game.addVisual(new ImagenIndicador())
+   	digitoIndicador2.actualizarValor(personajeSimple.energia())
+   	digitoIndicador1.actualizarValor(personajeSimple.energia())
+   	digitoIndicador0.actualizarValor(personajeSimple.energia())
+    game.addVisual(digitoIndicador2)
+    game.addVisual(digitoIndicador1)
+    game.addVisual(digitoIndicador0)
+    //game.addVisual(new Bloque(position = game.at(3, 12)))
+    
       // prueba de posicionar aleatoreamente bichos
-    bicho1.position(utilidadesParaJuego.posicionArbitraria())
+    /*bicho1.position(utilidadesParaJuego.posicionArbitraria())
     bicho2.position(utilidadesParaJuego.posicionArbitraria())
     bicho3.position(utilidadesParaJuego.posicionArbitraria())
     bicho4.position(utilidadesParaJuego.posicionArbitraria())
     game.addVisual(bicho1)
     game.addVisual(bicho2)
     game.addVisual(bicho3)
-    game.addVisual(bicho4)
+    game.addVisual(bicho4)*/
       // personaje, es importante que sea el último visual que se agregue
     game.addVisual(personajeSimple)
+    game.showAttributes(personajeSimple)
+    game.say(personajeSimple, "¡A jugar!")
       // teclado
       // este es para probar, no es necesario dejarlo
     keyboard.t().onPressDo({ self.terminar()})
