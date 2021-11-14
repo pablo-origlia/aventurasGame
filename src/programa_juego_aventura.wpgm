@@ -6,6 +6,6 @@ program juego_aventura {
   game.height(15)
   game.width(15)
   game.boardGround("fondoBlanco.png")
-  nivelBloques.configurate()
+  nivelFlores.configurate()
   game.start()
 }

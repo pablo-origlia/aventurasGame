@@ -5,63 +5,115 @@ import elementos.*
 import nivel2.*
 import utilidades.*
 
-object nivelBloques {
+object nivelFlores {
 
   method configurate() {
+  	//Fondo
     // fondo - es importante que sea el primer visual que se agregue
-    game.addVisual(new Fondo(image = "fondoCompleto.png"))
+    game.addVisual(new Fondo(image = "fondoNivel1.png"))
+    
       // otros visuals, p.ej. bloques o llaves
-    game.addVisual(new Bloque(position = game.at(3, 12)))
-    game.addVisual(new ImagenIndicador())
-   	digitoIndicador2.actualizarValor(personajeSimple.energia())
-   	digitoIndicador1.actualizarValor(personajeSimple.energia())
-   	digitoIndicador0.actualizarValor(personajeSimple.energia())
-    game.addVisual(digitoIndicador2)
-    game.addVisual(digitoIndicador1)
-    game.addVisual(digitoIndicador0)
     //game.addVisual(new Bloque(position = game.at(3, 12)))
     
-      // prueba de posicionar aleatoreamente bichos
-    /*bicho1.position(utilidadesParaJuego.posicionArbitraria())
-    bicho2.position(utilidadesParaJuego.posicionArbitraria())
-    bicho3.position(utilidadesParaJuego.posicionArbitraria())
-    bicho4.position(utilidadesParaJuego.posicionArbitraria())
-    game.addVisual(bicho1)
-    game.addVisual(bicho2)
-    game.addVisual(bicho3)
-    game.addVisual(bicho4)*/
-      // personaje, es importante que sea el último visual que se agregue
+    //Indicador de Energía
+    game.addVisual(indicadorEnergia.imagen())
+    game.addVisual(indicadorEnergia.centena())
+    game.addVisual(indicadorEnergia.decena())
+    game.addVisual(indicadorEnergia.unidad())
+    indicadorEnergia.actualizarValor(personajeSimple.energia())
+    
+    //Elementos que otorgan Energia
+    game.addVisual(new Hamburguesa(position = utilidadesParaJuego.posicionArbitraria()))
+    game.addVisual(new Hamburguesa(position = utilidadesParaJuego.posicionArbitraria()))
+    game.addVisual(new Hamburguesa(position = utilidadesParaJuego.posicionArbitraria()))
+	game.addVisual(new Gaseosa(position = utilidadesParaJuego.posicionArbitraria()))
+    game.addVisual(new Gaseosa(position = utilidadesParaJuego.posicionArbitraria()))
+    game.addVisual(new Gaseosa(position = utilidadesParaJuego.posicionArbitraria()))
+
+  	//Flores
+  	
+  	game.addVisual(new Flor(position = utilidadesParaJuego.posicionArbitraria()))
+    game.addVisual(new Flor(position = utilidadesParaJuego.posicionArbitraria()))
+    game.addVisual(new Flor(position = utilidadesParaJuego.posicionArbitraria()))
+	game.addVisual(new Flor(position = utilidadesParaJuego.posicionArbitraria()))
+    game.addVisual(new Flor(position = utilidadesParaJuego.posicionArbitraria()))
+    game.addVisual(new Flor(position = utilidadesParaJuego.posicionArbitraria()))
+    
+    /*const flores = [new Posicion(position = utilidadesParaJuego.posicionArbitraria()),new Posicion(position = utilidadesParaJuego.posicionArbitraria()),
+    	new Posicion(position = utilidadesParaJuego.posicionArbitraria()),new Posicion(position = utilidadesParaJuego.posicionArbitraria()),
+    	new Posicion(position = utilidadesParaJuego.posicionArbitraria()),new Posicion(position = utilidadesParaJuego.posicionArbitraria())]
+    	.map{ p => self.dibujar(new Flor(position = p)) }*/
+    	/*, llegadas = llegadas*/
+    	
+    	
+    //Area de plantado
+    game.addVisual(tierra)
+   	
+   	//Agujero Negro
+   	game.addVisual(new AgujeroNegro(position = game.at(1,1)))
+   	//game.addVisual(new AgujeroNegro(position = utilidadesParaJuego.posicionArbitraria()))
+   	
+   	//Personaje
+    // personaje, es importante que sea el último visual que se agregue
     game.addVisual(personajeSimple)
     game.showAttributes(personajeSimple)
-    game.say(personajeSimple, "¡A jugar!")
-      // teclado
-      // este es para probar, no es necesario dejarlo
-    keyboard.t().onPressDo({ self.terminar()})
+    game.say(personajeSimple, "¡Ayudame a plantar todas las plantas!")
+    
+    /*Colisiones*/
+    
+	game.onCollideDo(personajeSimple, {e=> e.chocarConPersonaje()})
+      
+    // Teclado
+    keyboard.s().onPressDo({ self.salir()})
+    
+    // este es para probar, no es necesario dejarlo
+     keyboard.g().onPressDo({ self.ganar()})
+    
     keyboard.right().onPressDo{ personajeSimple.moverDerecha()}
     keyboard.left().onPressDo{ personajeSimple.moverIzquierda()}
     keyboard.up().onPressDo{ personajeSimple.moverArriba()}
     keyboard.down().onPressDo{ personajeSimple.moverAbajo()}
+    
+      //game.addVisual(new Bloque(position = game.at(3, 12)))
+    
+   
   // en este no hacen falta colisiones
   }
-
-  method terminar() {
+	
+  method salir(){
+  	game.clear()
+  	game.addVisual(new Fondo(image = "fondoSalirNivel1.png"))
+  }
+  
+  method ganar() {
     // game.clear() limpia visuals, teclado, colisiones y acciones
     game.clear()
-      // después puedo volver a agregar el fondo, y algún visual para que no quede tan pelado
-    game.addVisual(new Fondo(image = "fondoCompleto.png"))
+    // después puedo volver a agregar el fondo, y algún visual para que no quede tan pelado
+    game.addVisual(new Fondo(image = "fondoCompletoNivel1.png"))
     game.addVisual(personajeSimple)
       // después de un ratito ...
-    game.schedule(2500, { game.clear()
+    game.schedule(1000, { game.clear()
         // cambio de fondo
-      game.addVisual(new Fondo(image = "finNivel1.png"))
+      game.addVisual(new Fondo(image = "FondoGanarNivel1.png"))
         // después de un ratito ...
       game.schedule(3000, { // ... limpio todo de nuevo
         game.clear()
           // y arranco el siguiente nivel
-        nivelLlaves.configurate()
+        nivelDinero.configurate()
       })
     })
   }
+  
+  method perder(){
+  	game.clear()
+  	game.addVisual(new Fondo(image = "FondoPerderNivel1.png"))
+  }
+  
+  method dibujar(dibujo) {
+		game.addVisual(dibujo)
+		return dibujo
+	}
 
 }
+
 

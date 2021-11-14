@@ -1,5 +1,7 @@
 import wollok.game.*
 import elementos.*
+import nivel1.*
+import nivel2.*
 
 class Direccion {
   const property siguiente
@@ -17,9 +19,10 @@ class Direccion {
 object personajeSimple {
 
   var property position = game.at(2, 8)
-  const property image = "player.png"
+  var property image = "playerRight.png"
   var property energia = 30
   var property salud = 100
+  var property dinero = 150
   var property cantidadDeGranadas = 0
   
   
@@ -30,12 +33,16 @@ object personajeSimple {
 
   method consumirEnergia(){
   	energia = 0.max(energia -1)
-	digitoIndicador2.actualizarValor(energia)
-	digitoIndicador1.actualizarValor(energia)
-	digitoIndicador0.actualizarValor(energia)
+	indicadorEnergia.actualizarValor(energia)
+	
   	if (energia == 0){
-  		//TERMINAR EL JUEGO
+  		nivelFlores.perder()
   	}
+  }
+  
+  method aumentarEnergia(cantidad){
+  	energia = 999.min(energia + cantidad)
+  	indicadorEnergia.actualizarValor(energia)
   }
   
   method estaEnBordeIzquierdo() = self.position().x() == 0
@@ -68,11 +75,13 @@ object personajeSimple {
 
   method avanzarALaDerecha() {
     self.cambiarPosicion(self.position().right(1))
+    self.image("playerRight.png")
     self.consumirEnergia()
   }
 
   method avanzarALaIzquierda() {
     self.cambiarPosicion(self.position().left(1))
+    self.image("playerLeft.png")
     self.consumirEnergia()
   }
 
@@ -119,6 +128,150 @@ object personajeSimple {
   }
 
 }
+
+/**************************************************************************************************/
+
+object personajeNivel2 {
+
+  var property position = game.at(2, 8)
+  var property image = "playerRight.png"
+  var property energia = 30
+  var property salud = 100
+  var property dinero = 150
+  var property cantidadDeGranadas = 0
+  
+  
+
+  method cambiarPosicion(pos) {
+    self.position(pos)
+  }
+
+ 	/*method consumirEnergia(){
+  	energia = 0.max(energia -1)
+	indicadorEnergia.actualizarValor(energia)
+	
+  	if (salud == 0){
+  		nivelDinero.perder()
+  	}
+  }*/
+  
+  method aumentarSalud(cantidad){
+  	salud = 999.min(salud + cantidad)
+  	indicadorSalud.actualizarValor(salud)
+  }
+  
+  method aumentarDinero(cantidad){
+ 	dinero = 999.min(dinero + cantidad)
+  	indicadorDinero.actualizarValor(dinero)
+  }
+  
+  
+  method estaEnBordeIzquierdo() = self.position().x() == 0
+
+  method estaEnBordeDerecho() = self.position().x() == game.width() - 1
+
+  method estaEnBordeInferior() = self.position().y() == 0
+
+  method estaEnBordeSuperior() = self.position().y() == game.height() - 2
+
+  method irAlBordeIzquierdo() {
+    self.cambiarPosicion(self.position().left(game.width() - 1))
+  }
+
+  method irAlBordeDerecho() {
+    self.cambiarPosicion(self.position().right(game.width() - 1))
+  }
+
+  method irAlBordeInferior() {
+    self.cambiarPosicion(self.position().down(game.height() - 2))
+  }
+
+  method irAlBordeSuperior() {
+    self.cambiarPosicion(self.position().up(game.height() - 2))
+  }
+
+  method avanzarALaDerecha() {
+    self.cambiarPosicion(self.position().right(1))
+    self.image("playerRight.png")
+  }
+
+  method avanzarALaIzquierda() {
+    self.cambiarPosicion(self.position().left(1))
+    self.image("playerLeft.png")
+  }
+
+  method avanzarArriba() {
+    self.cambiarPosicion(self.position().up(1))
+  }
+
+  method avanzarAbajo() {
+    self.cambiarPosicion(self.position().down(1))
+  }
+
+  method moverDerecha() {
+    if (self.estaEnBordeDerecho()) {
+      self.irAlBordeIzquierdo()
+    } else {
+      self.avanzarALaDerecha()
+    }
+  }
+
+  method moverIzquierda() {
+    if (self.estaEnBordeIzquierdo()) {
+      self.irAlBordeDerecho()
+    } else {
+      self.avanzarALaIzquierda()
+    }
+  }
+
+  method moverArriba() {
+    if (self.estaEnBordeSuperior()) {
+      self.irAlBordeInferior()
+    } else {
+      self.avanzarArriba()
+    }
+  }
+
+  method moverAbajo() {
+    if (self.estaEnBordeInferior()) {
+      self.irAlBordeSuperior()
+    } else {
+      self.avanzarAbajo()
+    }
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Esto de prueba nada mas por ahora.
 class Bicho {
