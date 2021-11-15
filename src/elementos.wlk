@@ -2,6 +2,8 @@ import wollok.game.*
 import willy.*
 import utilidades.*
 import nivel1.*
+import nivel2.*
+import nivel3.*
 
 object tierra {
 
@@ -81,7 +83,7 @@ class Curita inherits Elemento {
   override method cantidadQueOtorga() = 30
 
   override method reaccionar(direccion) {
-    willy.aumentarSalud(self.cantidadQueOtorga())
+    willy2.aumentarSalud(self.cantidadQueOtorga())
     game.removeVisual(self)
   }
 
@@ -102,9 +104,16 @@ class Moneda inherits Elemento {
   override method cantidadQueOtorga() = 50
 
   override method reaccionar(direccion) {
-    willy.aumentarDinero(self.cantidadQueOtorga())
+    willy2.aumentarDinero(self.cantidadQueOtorga())
+    willy2.consumirSalud(20)
+    nivelDinero.platita().remove(self)
+    
+    if (nivelDinero.platita().isEmpty()){
+    	game.addVisual(new Puerta(position = utilidadesParaJuego.posicionArbitraria()))
+    }
     game.removeVisual(self)
-  }
+    
+   }
 
 }
 
@@ -123,9 +132,32 @@ class Puerta inherits Elemento {
   override method cantidadQueOtorga() = 0
 
   override method reaccionar(direccion) {
-    game.say(willy, "¡Quierooooo salir!")
+    game.say(willy2, "Iupi!!!")
+    game.schedule(1000,{nivelDinero.ganar()})
   }
 
+}
+
+
+class Granada inherits Elemento {
+  
+  override method image() = "grenade.png"
+  
+  override method cantidadQueOtorga() = 1
+  
+  override method reaccionar(direccion) {
+	willy3.aumentarGranadas(self.cantidadQueOtorga())
+    game.removeVisual(self)
+  }
+  
+  override method puedePisarte(_) = true
+  
+  method lanzar(){
+  	game.say(willy3,"HOLA")
+  }
+  
+  
+  
 }
 
 // Celdas sorpresa
@@ -292,12 +324,24 @@ object indicadorGranadas {
 
 }
 
-class Bichos {
+class Bicho {
 
   const property image
   var property position
+  
+  method movete(){
+  	position = utilidadesParaJuego.posicionArbitraria()
+  }
+  
+  method reaccionar(direccion) {
+  willy3.consumirSalud(20)
+  game.removeVisual(self)
+  nivelBichos.bichos().remove(self)
+  }
+  
 
 }
+
 
 class Posicion {
 
