@@ -8,6 +8,7 @@ import utilidades.*
 import willy.*
 
 object nivelFlores {
+  var property flores
 
   method configurate() {
     // Fondo
@@ -20,6 +21,12 @@ object nivelFlores {
     game.addVisual(indicadorEnergia.decena())
     game.addVisual(indicadorEnergia.unidad())
     indicadorEnergia.actualizarValor(willy.energia())
+       // Indicador de Salud
+    game.addVisual(indicadorSalud.imagen())
+    game.addVisual(indicadorSalud.centena())
+    game.addVisual(indicadorSalud.decena())
+    game.addVisual(indicadorSalud.unidad())
+    indicadorSalud.actualizarValor(willy.salud())
       // Elementos que otorgan Energia
     game.addVisual(new Hamburguesa(position = utilidadesParaJuego.posicionArbitraria()))
     game.addVisual(new Hamburguesa(position = utilidadesParaJuego.posicionArbitraria()))
@@ -28,12 +35,20 @@ object nivelFlores {
     game.addVisual(new Gaseosa(position = utilidadesParaJuego.posicionArbitraria()))
     game.addVisual(new Gaseosa(position = utilidadesParaJuego.posicionArbitraria()))
       // Flores
+	  // lista de flores agregadas al nivel
+ 	flores = [new Flor(position = utilidadesParaJuego.posicionArbitraria()),new Flor(position = utilidadesParaJuego.posicionArbitraria()),
+ 		new Flor(position = utilidadesParaJuego.posicionArbitraria()),new Flor(position = utilidadesParaJuego.posicionArbitraria()),
+ 		new Flor(position = utilidadesParaJuego.posicionArbitraria()),new Flor(position = utilidadesParaJuego.posicionArbitraria())]
+ 	flores.forEach({f=>game.addVisual(f)})
+      
+    /*game.addVisual(new Flor(position = utilidadesParaJuego.posicionArbitraria()))
     game.addVisual(new Flor(position = utilidadesParaJuego.posicionArbitraria()))
     game.addVisual(new Flor(position = utilidadesParaJuego.posicionArbitraria()))
     game.addVisual(new Flor(position = utilidadesParaJuego.posicionArbitraria()))
     game.addVisual(new Flor(position = utilidadesParaJuego.posicionArbitraria()))
-    game.addVisual(new Flor(position = utilidadesParaJuego.posicionArbitraria()))
-    game.addVisual(new Flor(position = utilidadesParaJuego.posicionArbitraria()))
+    game.addVisual(new Flor(position = utilidadesParaJuego.posicionArbitraria()))*/
+    
+
       /*const flores = [new Posicion(position = utilidadesParaJuego.posicionArbitraria()),new Posicion(position = utilidadesParaJuego.posicionArbitraria()),
        * 	new Posicion(position = utilidadesParaJuego.posicionArbitraria()),new Posicion(position = utilidadesParaJuego.posicionArbitraria()),
        * 	new Posicion(position = utilidadesParaJuego.posicionArbitraria()),new Posicion(position = utilidadesParaJuego.posicionArbitraria())]
@@ -41,18 +56,28 @@ object nivelFlores {
       /*, llegadas = llegadas*/
       // Area de plantado
     game.addVisual(tierra)
-      // Agujero Negro
-    game.addVisual(new AgujeroNegro(position = game.at(1, 1)))
+      // Elementos sorpresa
+    game.addVisual(quitaEnergia)
+    game.addVisual(bonusEnergia)
+    game.addVisual(elementoSorpresa)
+    game.addVisual(agujeroNegro)
+    
       // game.addVisual(new AgujeroNegro(position = utilidadesParaJuego.posicionArbitraria()))
 /////////////////// SE AGREGA ESTO ////////////////////////////////////////////
 // WILLY
     game.addVisual(willy)
     game.say(willy, "¡Ayudame a plantar todas las plantas!")
+    
+//Colisiones
+	game.onCollideDo(willy, {e=> willy.manipularElemento(e)})
 //  TECLADO
     keyboard.up().onPressDo{ willy.irArriba()}
     keyboard.down().onPressDo{ willy.irAbajo()}
     keyboard.left().onPressDo{ willy.irIzquierda()}
     keyboard.right().onPressDo{ willy.irDerecha()}
+    keyboard.any().onPressDo{ self.comprobarSiGano() }
+    
+    
 /////////////////// SE AGREGA ESTO ////////////////////////////////////////////
       /*
        * 	//Personaje
@@ -116,6 +141,14 @@ object nivelFlores {
     })
   }
 
+  method comprobarSiGano() {
+    if (flores.all{ f => f.estaBienPosicionada() }) {
+      game.say(willy, "GANASTE!")
+      self.ganar()
+    }
+  }	
+  
+  
   method dibujar(dibujo) {
     game.addVisual(dibujo)
     return dibujo

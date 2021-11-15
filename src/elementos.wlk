@@ -1,39 +1,38 @@
 import wollok.game.*
-import personajes.*
+import willy.*
 import utilidades.*
+import nivel1.*
 
 object tierra{
-	const ancho = 5
-	const alto = 4
+	const property ancho = 5
+	const property alto = 4
 	const property position = game.at(1.randomUpTo(game.width()-ancho-1).truncate(0), 1.randomUpTo(game.height()-alto-2).truncate(0))
 	const property image = "tierra.png"
 	
-	method chocarConPersonaje(){}
+	method reaccionar(direccion){}
 }
 
 class Flor {
   var property position
   const property image = "flor_4.png"
   
-  method chocarConPersonaje(){}
+  method reaccionar(direccion){}
+  
+  // verificar las coordenadas x e y de su posicion
+  // si estan dentro de la zona de tierra.
+  method estaBienPosicionada() = 
+    self.position().x().between(tierra.position().x(), tierra.position().x() + tierra.ancho())
+    and 
+    self.position().y().between(tierra.position().y(), tierra.position().y() + tierra.alto())
 
-// agregar comportamiento	
-}
-
-class AgujeroNegro{
-	const property position
-	
-	method chocarConPersonaje(){
-		game.say(personajeSimple,"Maldito agujero negro!")
-		personajeSimple.position(utilidadesParaJuego.posicionArbitraria())
-	}
 }
 
 class Elemento{
+	
 	var property position 
 
 	method cantidadQueOtorga()
-	method chocarConPersonaje()
+	method reaccionar(direccion)
 	method image()
 }
 
@@ -41,8 +40,8 @@ class Hamburguesa inherits Elemento{
 	
 	override method cantidadQueOtorga() = 15
 
-	override method chocarConPersonaje(){
-		personajeSimple.aumentarEnergia(self.cantidadQueOtorga())
+	override method reaccionar(direccion){
+		willy.aumentarEnergia(self.cantidadQueOtorga())
 		game.removeVisual(self)
 	}
 	
@@ -60,8 +59,8 @@ class Gaseosa inherits Hamburguesa{
 
 class Curita inherits Elemento{
 	
-	override method chocarConPersonaje(){
-		personajeNivel2.aumentarSalud(self.cantidadQueOtorga())
+	override method reaccionar(direccion){
+		willy.aumentarSalud(self.cantidadQueOtorga())
 		game.removeVisual(self)
 	}
 	
@@ -80,8 +79,8 @@ class Maletin inherits Curita{
 
 class Moneda inherits Elemento{
 	
-	override method chocarConPersonaje(){
-		personajeNivel2.aumentarDinero(self.cantidadQueOtorga())
+	override method reaccionar(direccion){
+		willy.aumentarDinero(self.cantidadQueOtorga())
 		game.removeVisual(self)
 	}
 	
@@ -189,6 +188,59 @@ object indicadorGranadas{
 		unidad.actualizarValor(dato)
 	}		
 }
+
+object quitaEnergia {
+
+  const property position = utilidadesParaJuego.posicionArbitraria()
+  const property image = "question_block.png"
+
+  method reaccionar(direccion) {
+    game.removeVisual(self)
+    willy.consumirEnergia(15)
+  }
+}
+
+object bonusEnergia {
+
+  const property position = utilidadesParaJuego.posicionArbitraria()
+  const property image = "question_block.png"
+
+  method reaccionar(direccion) {
+    game.removeVisual(self)
+    willy.aumentarEnergia(30)
+  }
+}
+
+object elementoSorpresa {
+
+  const property position = utilidadesParaJuego.posicionArbitraria()
+  const property image = "question_block.png"
+
+  method reaccionar(direccion) {
+    game.removeVisual(self)
+    const flor = new Flor(position = utilidadesParaJuego.posicionArbitraria())
+    game.addVisual(flor)
+    nivelFlores.flores().add(flor)
+  }
+}
+
+object agujeroNegro {
+
+  const property position = utilidadesParaJuego.posicionArbitraria()
+  const property image = "question_block.png"
+
+  method reaccionar(direccion) {
+    game.removeVisual(self)
+    game.say(willy, "Maldito agujero negro!")
+    willy.position(utilidadesParaJuego.posicionArbitraria())
+  }
+}
+
+
+
+
+
+
 
 
 class Bichos{

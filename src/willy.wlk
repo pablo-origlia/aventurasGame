@@ -17,16 +17,16 @@ object willy {
     self.position(pos)
   }
 
-  method consumirEnergia() {
-    energia = 0.max(energia - 1)
+  method consumirEnergia(cantidadDeEnergia) {
+    energia = 0.max(energia - cantidadDeEnergia)
     indicadorEnergia.actualizarValor(energia)
     if (energia == 0) {
       nivelFlores.perder()
     }
   }
 
-  method aumentarEnergia(cantidad) {
-    energia = 999.min(energia + cantidad)
+  method aumentarEnergia(cantidadDeEnergia) {
+    energia = 999.min(energia + cantidadDeEnergia)
     indicadorEnergia.actualizarValor(energia)
   }
 
@@ -73,12 +73,34 @@ object willy {
 
   method avanzar() {
     position = direccion.siguiente(position)
-    self.consumirEnergia()
+    self.consumirEnergia(1)
   }
 
   method setDireccion(unaDireccion) {
     direccion = unaDireccion
   }
+  
+  method manipularElemento(unElemento){
+  	unElemento.reaccionar(direccion)
+  }
+  
+  method aumentarSalud(cantidad){
+  	salud = 999.min(salud + cantidad)
+  	indicadorSalud.actualizarValor(salud)
+  }
+  
+  method aumentarDinero(cantidad){
+    dinero = 999.min(dinero + cantidad)
+	indicadorDinero.actualizarValor(dinero)
+  }
+  
 
 }
 
+/**************************************/
+
+object willy2 {
+	
+	method	aumentarDinero(cantidad){}
+	
+}

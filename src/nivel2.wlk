@@ -1,6 +1,6 @@
 import wollok.game.*
 import fondo.*
-import personajes.*
+import willy.*
 import elementos.*
 import utilidades.*
 import nivel3.*
@@ -18,7 +18,7 @@ object nivelDinero {
 		game.addVisual(indicadorDinero.centena())
 		game.addVisual(indicadorDinero.decena())
 		game.addVisual(indicadorDinero.unidad())
-		indicadorDinero.actualizarValor(personajeNivel2.dinero())
+		indicadorDinero.actualizarValor(willy.dinero())
 
 
 		//Indicador de Salud
@@ -26,7 +26,7 @@ object nivelDinero {
 		game.addVisual(indicadorSalud.centena())
 		game.addVisual(indicadorSalud.decena())
 		game.addVisual(indicadorSalud.unidad())
-		indicadorSalud.actualizarValor(personajeNivel2.salud())
+		indicadorSalud.actualizarValor(willy.salud())
 
 		//Elementos que otorgan Salud
 		game.addVisual(new Curita(position = utilidadesParaJuego.posicionArbitraria()))
@@ -37,23 +37,23 @@ object nivelDinero {
 		game.addVisual(new Billete(position = utilidadesParaJuego.posicionArbitraria()))
 
 		// personaje, es importante que sea el último visual que se agregue
-		game.addVisual(personajeNivel2)
+		game.addVisual(willy)
 
 		// teclado
 
 		keyboard.s().onPressDo({ self.salir()})
 
-		keyboard.right().onPressDo{ personajeNivel2.moverDerecha()}
-		keyboard.left().onPressDo{ personajeNivel2.moverIzquierda()}
-		keyboard.up().onPressDo{ personajeNivel2.moverArriba()}
-		keyboard.down().onPressDo{ personajeNivel2.moverAbajo()}
+		keyboard.right().onPressDo{ willy.moverDerecha()}
+		keyboard.left().onPressDo{ willy.moverIzquierda()}
+		keyboard.up().onPressDo{ willy.moverArriba()}
+		keyboard.down().onPressDo{ willy.moverAbajo()}
 
 		// este es para probar, no es necesario dejarlo
 		keyboard.g().onPressDo({ self.ganar() })
 		keyboard.p().onPressDo({ self.perder() })
 
 		// colisiones, acá sí hacen falta
-		game.onCollideDo(personajeNivel2, {e=> e.chocarConPersonaje()})
+		game.onCollideDo(willy, {e=> willy.manipularElemento(e)})
 
 
 		// prueba de posicionar aleatoriamente bichos
@@ -70,7 +70,7 @@ object nivelDinero {
 		method salir(){
 			game.clear()
 			game.addVisual(new Fondo(image="fondoCompletoNivel2.png"))
-			game.addVisual(personajeNivel2)
+			game.addVisual(willy)
 			game.schedule(1000, {
 				game.clear()
 				game.addVisual(new Fondo(image="fondoSalirNivel2.png"))
@@ -85,7 +85,7 @@ object nivelDinero {
 		game.clear()
 		// después puedo volver a agregar el fondo, y algún visual para que no quede tan pelado
 		game.addVisual(new Fondo(image = "fondoCompletoNivel2.png"))
-		game.addVisual(personajeNivel2)
+		game.addVisual(willy)
 		// después de un ratito ...
     	game.schedule(1000, { game.clear()
 		// cambio de fondo
@@ -102,7 +102,7 @@ object nivelDinero {
 	method perder(){
 		game.clear()
 		game.addVisual(new Fondo(image="fondoCompletoNivel2.png"))
-		game.addVisual(personajeNivel2)
+		game.addVisual(willy)
 		game.schedule(1000, {
 			game.clear()
 			game.addVisual(new Fondo(image="fondoPerderNivel2.png"))
