@@ -7,7 +7,7 @@ object willy {
 
   var property position = game.at(0, 13)
   var direccion = arriba
-  var property energia = 30
+  var property energia = 100 // 30
   var property salud = 100
   var property dinero = 150
   var property cantidadDeGranadas = 0

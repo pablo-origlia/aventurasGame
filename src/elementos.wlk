@@ -35,7 +35,7 @@ class Flor {
 
   method puedePisarte(_) = false
 
-  method estaBienPosicionada() = self.position().x().between(tierra.position().x(), tierra.position().x() + tierra.ancho()) and self.position().y().between(tierra.position().y(), tierra.position().y() + tierra.alto())
+  method estaBienPosicionada() = self.position().x().between(tierra.position().x(), tierra.position().x() + tierra.ancho() - 1) and self.position().y().between(tierra.position().y(), tierra.position().y() + tierra.alto() - 1)
 
 }
 

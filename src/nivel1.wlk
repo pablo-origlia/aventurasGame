@@ -61,15 +61,15 @@ object nivelFlores {
       // game.addVisual(new AgujeroNegro(position = utilidadesParaJuego.posicionArbitraria()))
       // Willy
     game.addVisual(willy)
-    game.say(willy, "¡Ayudame a plantar todas las plantas!")
+    game.say(willy, "¡Ayudame a sembrar todas las plantas!")
       // Colisiones
     game.onCollideDo(willy, { e => willy.manipular(e)})
       // TECLADO
+    keyboard.any().onPressDo{ self.comprobarSiGano()}
     keyboard.up().onPressDo{ willy.irArriba()}
     keyboard.down().onPressDo{ willy.irAbajo()}
     keyboard.left().onPressDo{ willy.irIzquierda()}
     keyboard.right().onPressDo{ willy.irDerecha()}
-    keyboard.any().onPressDo{ self.comprobarSiGano()}
       /*
        * 	//Personaje
        *     //Es importante que sea el último visual que se agregue
