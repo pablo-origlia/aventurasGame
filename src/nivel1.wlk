@@ -4,7 +4,6 @@ import personajes.*
 import elementos.*
 import nivel2.*
 import utilidades.*
-// AGREGO EL IMPORT DE WILLY
 import willy.*
 
 object nivelFlores {
@@ -37,8 +36,7 @@ object nivelFlores {
     game.addVisual(new Gaseosa(position = utilidadesParaJuego.posicionArbitraria()))
     game.addVisual(new Gaseosa(position = utilidadesParaJuego.posicionArbitraria()))
     game.addVisual(new Gaseosa(position = utilidadesParaJuego.posicionArbitraria()))
-      // Flores
-      // lista de flores agregadas al nivel
+      // Flores - lista de flores agregadas al nivel
     flores = [ new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_1.png"), new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_2.png"), new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_3.png") // new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_4.png"), 
 //      new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_5.png"), 
 //      new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_6.png")
@@ -61,19 +59,17 @@ object nivelFlores {
     game.addVisual(elementoSorpresa)
     game.addVisual(agujeroNegro)
       // game.addVisual(new AgujeroNegro(position = utilidadesParaJuego.posicionArbitraria()))
-/////////////////// SE AGREGA ESTO ////////////////////////////////////////////
-// WILLY
+      // Willy
     game.addVisual(willy)
     game.say(willy, "¡Ayudame a plantar todas las plantas!")
-//Colisiones
+      // Colisiones
     game.onCollideDo(willy, { e => willy.manipular(e)})
-//  TECLADO
+      // TECLADO
     keyboard.up().onPressDo{ willy.irArriba()}
     keyboard.down().onPressDo{ willy.irAbajo()}
     keyboard.left().onPressDo{ willy.irIzquierda()}
     keyboard.right().onPressDo{ willy.irDerecha()}
     keyboard.any().onPressDo{ self.comprobarSiGano()}
-/////////////////// SE AGREGA ESTO ////////////////////////////////////////////
       /*
        * 	//Personaje
        *     //Es importante que sea el último visual que se agregue

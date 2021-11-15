@@ -17,9 +17,9 @@ Se agregan algunos visuals de ejemplos en cada nivel, una tecla en el nivel 1 **
 
 - ~Efecto tipo pac-man, esto quiere decir que si por ejemplo, el personaje principal esta posicionado sobre cualquier columna en la fila superior del tablero  y  se presiona la flecha arriba (↑), entonces el personaje deberá aparecer en la parte inferior del tablero. Esta funcionalidad debe ser independiente del tamaño del tablero (no vale hardcodear los valores de alto y ancho)~
 
-- El personaje principal deberá poder mover objetos, para ello debe posicionarse detrás del objeto. P.ej. si el personaje está a la izquierda de una caja y se mueve hacia la derecha, entonces la caja se mueven en forma conjunta.
+- ~El personaje principal deberá poder mover objetos, para ello debe posicionarse detrás del objeto. P.ej. si el personaje está a la izquierda de una caja y se mueve hacia la derecha, entonces la caja se mueven en forma conjunta~.
 
-- Se deben agregar varios tipos de objetos como por ejemplo, hamburgueas y gaseosas que dan energía, otros que dan salud (ponele, un botiquín), otros que deben ser acumulables (tipo cajas,llaves, etc) y otros que otorgan dinero (ligontes de oro, monedas, etc)
+- ~Se deben agregar varios tipos de objetos como por ejemplo, hamburgueas y gaseosas que dan energía, otros que dan salud (ponele, un botiquín), otros que deben ser acumulables (tipo cajas,llaves, etc) y otros que otorgan dinero (ligontes de oro, monedas, etc)~
 
 - También debe tener bichos con movimientos aleatorios, pero también que se muevan hacia el personaje y si lo chochan el personaje pierde salud.
 
@@ -37,7 +37,7 @@ El objetivo del nivel 1 debe ser agrupar varios objetos acumulables en una zona 
 
 ~La zona del deposito se deberá generar en forma aleatoria cuando inicia el nivel.~
 
-Cuando todos los objetos acumulables están en la zona del deposito automáticamente se pasa al nivel 2.
+~Cuando todos los objetos acumulables están en la zona del deposito automáticamente se pasa al nivel 2~.
 
 ~Si el personaje se queda sin energía, entonces pierde. A cada paso que da el personaje, gasta una unidad de energía. El personaje arranca el nivel con 30 unidades de energía.~
 
