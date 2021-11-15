@@ -32,7 +32,7 @@ object willy {
 
   method empuja(unElemento) {
     try
-      unElemento.movete(direccion)
+      unElemento.reaccionar(direccion)
     catch e {
       console.println("Aca pasa algo.")
         // console.println(e)
@@ -79,28 +79,28 @@ object willy {
   method setDireccion(unaDireccion) {
     direccion = unaDireccion
   }
-  
-  method manipularElemento(unElemento){
-  	unElemento.reaccionar(direccion)
+
+  method manipularElemento(unElemento) {
+    unElemento.reaccionar(direccion)
   }
-  
-  method aumentarSalud(cantidad){
-  	salud = 999.min(salud + cantidad)
-  	indicadorSalud.actualizarValor(salud)
+
+  method aumentarSalud(cantidad) {
+    salud = 999.min(salud + cantidad)
+    indicadorSalud.actualizarValor(salud)
   }
-  
-  method aumentarDinero(cantidad){
+
+  method aumentarDinero(cantidad) {
     dinero = 999.min(dinero + cantidad)
-	indicadorDinero.actualizarValor(dinero)
+    indicadorDinero.actualizarValor(dinero)
   }
-  
 
 }
 
 /**************************************/
-
 object willy2 {
-	
-	method	aumentarDinero(cantidad){}
-	
+
+  method aumentarDinero(cantidad) {
+  }
+
 }
+
