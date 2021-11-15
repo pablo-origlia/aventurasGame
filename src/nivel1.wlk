@@ -28,6 +28,8 @@ object nivelFlores {
     game.addVisual(indicadorSalud.decena())
     game.addVisual(indicadorSalud.unidad())
     indicadorSalud.actualizarValor(willy.salud())
+      // Area de plantado
+    game.addVisual(tierra)
       // Elementos que otorgan Energia
     game.addVisual(new Hamburguesa(position = utilidadesParaJuego.posicionArbitraria()))
     game.addVisual(new Hamburguesa(position = utilidadesParaJuego.posicionArbitraria()))
@@ -37,7 +39,7 @@ object nivelFlores {
     game.addVisual(new Gaseosa(position = utilidadesParaJuego.posicionArbitraria()))
       // Flores
       // lista de flores agregadas al nivel
-    flores = [ new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_1.png"), new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_2.png"), new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_3.png") //      new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_4.png"), 
+    flores = [ new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_1.png"), new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_2.png"), new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_3.png") // new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_4.png"), 
 //      new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_5.png"), 
 //      new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_6.png")
     ]
@@ -53,8 +55,6 @@ object nivelFlores {
        * 	new Posicion(position = utilidadesParaJuego.posicionArbitraria()),new Posicion(position = utilidadesParaJuego.posicionArbitraria())]
        .map{ p => self.dibujar(new Flor(position = p)) }*/
       /*, llegadas = llegadas*/
-      // Area de plantado
-    game.addVisual(tierra)
       // Elementos sorpresa
     game.addVisual(quitaEnergia)
     game.addVisual(bonusEnergia)
@@ -66,7 +66,7 @@ object nivelFlores {
     game.addVisual(willy)
     game.say(willy, "¡Ayudame a plantar todas las plantas!")
 //Colisiones
-    game.onCollideDo(willy, { e => willy.manipularElemento(e)})
+    game.onCollideDo(willy, { e => willy.manipular(e)})
 //  TECLADO
     keyboard.up().onPressDo{ willy.irArriba()}
     keyboard.down().onPressDo{ willy.irAbajo()}

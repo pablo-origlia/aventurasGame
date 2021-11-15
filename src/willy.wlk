@@ -30,16 +30,6 @@ object willy {
     indicadorEnergia.actualizarValor(energia)
   }
 
-  method empuja(unElemento) {
-    try
-      unElemento.reaccionar(direccion)
-    catch e {
-      console.println("Aca pasa algo.")
-        // console.println(e)
-      self.retrocede()
-    }
-  }
-
   method retrocede() {
     position = direccion.opuesto().siguiente(position)
   }
@@ -80,8 +70,14 @@ object willy {
     direccion = unaDireccion
   }
 
-  method manipularElemento(unElemento) {
-    unElemento.reaccionar(direccion)
+  method manipular(unElemento) {
+    try
+      unElemento.reaccionar(direccion)
+    catch e {
+      console.println("Aca pasa algo.")
+        // console.println(e)
+      self.retrocede()
+    }
   }
 
   method aumentarSalud(cantidad) {

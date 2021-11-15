@@ -23,24 +23,18 @@ class Flor {
   const property image = "flor_4.png"
 
   method reaccionar(direccion) {
-    // verifica si no hay ningun objeto en la posicion a moverse
     if (self.validarLugarLibre(direccion)) {
-      // mueve el objeto
       position = direccion.siguiente(position)
     }
   }
 
   method validarLugarLibre(direccion) {
     const posAlLado = direccion.siguiente(position)
-//    const lugarLibre = game.getObjectsIn(posAlLado).all{ obj => obj.puedePisarte(self) }
-//    if (!lugarLibre) throw new Exception(message = "Algo traba la flor.")
     return game.getObjectsIn(posAlLado).all({ obj => obj.puedePisarte(self) })
   }
 
   method puedePisarte(_) = false
 
-  // verificar las coordenadas x e y de su posicion
-  // si estan dentro de la zona de tierra.
   method estaBienPosicionada() = self.position().x().between(tierra.position().x(), tierra.position().x() + tierra.ancho()) and self.position().y().between(tierra.position().y(), tierra.position().y() + tierra.alto())
 
 }
@@ -49,17 +43,19 @@ class Elemento {
 
   var property position
 
+  method image()
+
   method cantidadQueOtorga()
 
   method reaccionar(direccion)
 
   method puedePisarte(_) = false
 
-  method image()
-
 }
 
 class Hamburguesa inherits Elemento {
+
+  override method image() = "burger.png"
 
   override method cantidadQueOtorga() = 15
 
@@ -68,28 +64,26 @@ class Hamburguesa inherits Elemento {
     game.removeVisual(self)
   }
 
-  override method image() = "burger.png"
-
 }
 
 class Gaseosa inherits Hamburguesa {
 
-  override method cantidadQueOtorga() = 10
-
   override method image() = "soda.png"
+
+  override method cantidadQueOtorga() = 10
 
 }
 
 class Curita inherits Elemento {
 
+  override method image() = "bandage.png"
+
+  override method cantidadQueOtorga() = 30
+
   override method reaccionar(direccion) {
     willy.aumentarSalud(self.cantidadQueOtorga())
     game.removeVisual(self)
   }
-
-  override method cantidadQueOtorga() = 30
-
-  override method image() = "bandage.png"
 
 }
 
@@ -103,14 +97,14 @@ class Maletin inherits Curita {
 
 class Moneda inherits Elemento {
 
+  override method image() = "coin.png"
+
+  override method cantidadQueOtorga() = 50
+
   override method reaccionar(direccion) {
     willy.aumentarDinero(self.cantidadQueOtorga())
     game.removeVisual(self)
   }
-
-  override method image() = "coin.png"
-
-  override method cantidadQueOtorga() = 50
 
 }
 
@@ -119,6 +113,66 @@ class Billete inherits Moneda {
   override method image() = "dolar.png"
 
   override method cantidadQueOtorga() = 100
+
+}
+
+// Celdas sorpresa
+object quitaEnergia {
+
+  const property position = utilidadesParaJuego.posicionArbitraria()
+  const property image = "question_block.png"
+
+  method reaccionar(direccion) {
+    game.removeVisual(self)
+    willy.consumirEnergia(15)
+  }
+
+  method puedePisarte(_) = false
+
+}
+
+object bonusEnergia {
+
+  const property position = utilidadesParaJuego.posicionArbitraria()
+  const property image = "question_block.png"
+
+  method reaccionar(direccion) {
+    game.removeVisual(self)
+    willy.aumentarEnergia(30)
+  }
+
+  method puedePisarte(_) = false
+
+}
+
+object elementoSorpresa {
+
+  const property position = utilidadesParaJuego.posicionArbitraria()
+  const property image = "question_block.png"
+
+  method reaccionar(direccion) {
+    game.removeVisual(self)
+    const flor = new Flor(position = utilidadesParaJuego.posicionArbitraria())
+    game.addVisual(flor)
+    nivelFlores.flores().add(flor)
+  }
+
+  method puedePisarte(_) = false
+
+}
+
+object agujeroNegro {
+
+  const property position = utilidadesParaJuego.posicionArbitraria()
+  const property image = "question_block.png"
+
+  method reaccionar(direccion) {
+    game.removeVisual(self)
+    game.say(willy, "Maldito agujero negro!")
+    willy.position(utilidadesParaJuego.posicionArbitraria())
+  }
+
+  method puedePisarte(_) = false
 
 }
 
@@ -222,57 +276,6 @@ object indicadorGranadas {
     centena.actualizarValor(dato)
     decena.actualizarValor(dato)
     unidad.actualizarValor(dato)
-  }
-
-}
-
-object quitaEnergia {
-
-  const property position = utilidadesParaJuego.posicionArbitraria()
-  const property image = "question_block.png"
-
-  method reaccionar(direccion) {
-    game.removeVisual(self)
-    willy.consumirEnergia(15)
-  }
-
-}
-
-object bonusEnergia {
-
-  const property position = utilidadesParaJuego.posicionArbitraria()
-  const property image = "question_block.png"
-
-  method reaccionar(direccion) {
-    game.removeVisual(self)
-    willy.aumentarEnergia(30)
-  }
-
-}
-
-object elementoSorpresa {
-
-  const property position = utilidadesParaJuego.posicionArbitraria()
-  const property image = "question_block.png"
-
-  method reaccionar(direccion) {
-    game.removeVisual(self)
-    const flor = new Flor(position = utilidadesParaJuego.posicionArbitraria())
-    game.addVisual(flor)
-    nivelFlores.flores().add(flor)
-  }
-
-}
-
-object agujeroNegro {
-
-  const property position = utilidadesParaJuego.posicionArbitraria()
-  const property image = "question_block.png"
-
-  method reaccionar(direccion) {
-    game.removeVisual(self)
-    game.say(willy, "Maldito agujero negro!")
-    willy.position(utilidadesParaJuego.posicionArbitraria())
   }
 
 }
