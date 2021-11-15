@@ -30,14 +30,20 @@ object nivelDinero {
       // Elementos que otorgan Dinero
     game.addVisual(new Moneda(position = utilidadesParaJuego.posicionArbitraria()))
     game.addVisual(new Billete(position = utilidadesParaJuego.posicionArbitraria()))
+      // Puerta de salida
+    game.addVisual(new Puerta(position = utilidadesParaJuego.posicionArbitraria()))
       // personaje, es importante que sea el último visual que se agregue
+      // Willy
     game.addVisual(willy)
-      // teclado
-    keyboard.s().onPressDo({ self.salir()})
-    keyboard.right().onPressDo{ willy.moverDerecha()}
-    keyboard.left().onPressDo{ willy.moverIzquierda()}
-    keyboard.up().onPressDo{ willy.moverArriba()}
-    keyboard.down().onPressDo{ willy.moverAbajo()}
+    game.say(willy, "¡Ayudame a juntar plata y medicina!")
+      // Colisiones
+    game.onCollideDo(willy, { e => willy.manipular(e)})
+      // TECLADO
+      // keyboard.any().onPressDo{ self.comprobarSiGano()}
+    keyboard.up().onPressDo{ willy.irArriba()}
+    keyboard.down().onPressDo{ willy.irAbajo()}
+    keyboard.left().onPressDo{ willy.irIzquierda()}
+    keyboard.right().onPressDo{ willy.irDerecha()}
       // este es para probar, no es necesario dejarlo
     keyboard.g().onPressDo({ self.ganar()})
     keyboard.p().onPressDo({ self.perder()})
@@ -46,7 +52,7 @@ object nivelDinero {
       nivelFlores.configurate()
     })
       // colisiones, acá sí hacen falta
-    game.onCollideDo(willy, { e => willy.manipularElemento(e)})
+    game.onCollideDo(willy, { e => willy.manipular(e)})
   // prueba de posicionar aleatoriamente bichos
   /*bicho1.position(utilidadesParaJuego.posicionArbitraria())
    * bicho2.position(utilidadesParaJuego.posicionArbitraria())

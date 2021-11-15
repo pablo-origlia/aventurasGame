@@ -61,7 +61,7 @@ object nivelFlores {
       // game.addVisual(new AgujeroNegro(position = utilidadesParaJuego.posicionArbitraria()))
       // Willy
     game.addVisual(willy)
-    game.say(willy, "¡Ayudame a sembrar todas las plantas!")
+    game.say(willy, "¡Ayudame a sembrar las plantas!")
       // Colisiones
     game.onCollideDo(willy, { e => willy.manipular(e)})
       // TECLADO

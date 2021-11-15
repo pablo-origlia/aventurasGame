@@ -116,6 +116,18 @@ class Billete inherits Moneda {
 
 }
 
+class Puerta inherits Elemento {
+
+  override method image() = "door_small.png"
+
+  override method cantidadQueOtorga() = 0
+
+  override method reaccionar(direccion) {
+    game.say(willy, "¡Quierooooo salir!")
+  }
+
+}
+
 // Celdas sorpresa
 object quitaEnergia {
 
