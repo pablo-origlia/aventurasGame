@@ -28,6 +28,10 @@ class Flor {
     if (self.validarLugarLibre(direccion)) {
       position = direccion.siguiente(position)
     }
+    if (nivelFlores.flores().all{ f => f.estaBienPosicionada() }) {
+      game.say(willy, "GANASTE!")
+      game.schedule(1000,{nivelFlores.ganar()})
+    }
   }
 
   method validarLugarLibre(direccion) {
@@ -132,7 +136,7 @@ class Puerta inherits Elemento {
   override method cantidadQueOtorga() = 0
 
   override method reaccionar(direccion) {
-    game.say(willy2, "Iupi!!!")
+    game.say(willy2, "GANASTE!!!")
     game.schedule(1000,{nivelDinero.ganar()})
   }
 
@@ -154,10 +158,7 @@ class Granada inherits Elemento {
   
   method lanzar(){
   	game.say(willy3,"HOLA")
-  }
-  
-  
-  
+  }  
 }
 
 // Celdas sorpresa
@@ -330,7 +331,7 @@ class Bicho {
   var property position
   
   method movete(){
-  	position = utilidadesParaJuego.posicionArbitraria()
+  	position = utilidadesParaJuego.posicionArbitraria2()
   }
   
   method reaccionar(direccion) {
