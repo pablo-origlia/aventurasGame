@@ -9,14 +9,12 @@ object willy {
 
   var property position = game.at(0, 13)
   var direccion = arriba
-  var property energia = 100 // 30
+  var property energia = 100
   var property salud = 100
   var property dinero = 150
   var property cantidadDeGranadas = 0
   var property image = "playerRight.png"
 
-
-  
   method cambiarPosicion(pos) {
     self.position(pos)
   }
@@ -88,20 +86,18 @@ object willy {
     salud = 999.min(salud + cantidad)
     indicadorSalud.actualizarValor(salud)
   }
-  
+
   method consumirSalud(cantidad) {
     salud = 0.max(salud - cantidad)
     indicadorSalud.actualizarValor(salud)
-    
   }
 
   method aumentarDinero(cantidad) {
     dinero = 999.min(dinero + cantidad)
     indicadorDinero.actualizarValor(dinero)
   }
-  
-  method aumentarGranadas(cantidad)
-  {
+
+  method aumentarGranadas(cantidad) {
     cantidadDeGranadas = 999.min(cantidadDeGranadas + cantidad)
     indicadorGranadas.actualizarValor(cantidadDeGranadas)
   }
@@ -109,7 +105,6 @@ object willy {
 }
 
 /**************************************/
-
 object willy2 {
 
   var property position = game.at(0, 13)
@@ -191,22 +186,21 @@ object willy2 {
     salud = 999.min(salud + cantidad)
     indicadorSalud.actualizarValor(salud)
   }
-  
+
   method consumirSalud(cantidad) {
     salud = 0.max(salud - cantidad)
     indicadorSalud.actualizarValor(salud)
     if (salud == 0) {
       nivelDinero.perder()
-      }
+    }
   }
 
   method aumentarDinero(cantidad) {
     dinero = 999.min(dinero + cantidad)
     indicadorDinero.actualizarValor(dinero)
   }
-  
-  method aumentarGranadas(cantidad)
-  {
+
+  method aumentarGranadas(cantidad) {
     cantidadDeGranadas = 999.min(cantidadDeGranadas + cantidad)
     indicadorGranadas.actualizarValor(cantidadDeGranadas)
   }
@@ -214,7 +208,6 @@ object willy2 {
 }
 
 /**************************************/
-
 object willy3 {
 
   var property position = game.at(0, 13)
@@ -224,7 +217,7 @@ object willy3 {
   var property dinero = 150
   var property cantidadDeGranadas = 0
   var property image = "playerRight.png"
-  
+
   method direccion() = direccion
 
   method cambiarPosicion(pos) {
@@ -298,46 +291,43 @@ object willy3 {
     salud = 999.min(salud + cantidad)
     indicadorSalud.actualizarValor(salud)
   }
-  
+
   method consumirSalud(cantidad) {
     salud = 0.max(salud - cantidad)
     indicadorSalud.actualizarValor(salud)
     if (salud == 0) {
       nivelDinero.perder()
-      }
+    }
   }
 
   method aumentarDinero(cantidad) {
     dinero = 999.min(dinero + cantidad)
     indicadorDinero.actualizarValor(dinero)
   }
-  
-  method aumentarGranadas(cantidad)
-  {
+
+  method aumentarGranadas(cantidad) {
     cantidadDeGranadas = 999.min(cantidadDeGranadas + cantidad)
     indicadorGranadas.actualizarValor(cantidadDeGranadas)
   }
-  
-    method consumirGranadas(cantidad)
-  {
+
+  method consumirGranadas(cantidad) {
     cantidadDeGranadas = 0.max(cantidadDeGranadas - cantidad)
     indicadorGranadas.actualizarValor(cantidadDeGranadas)
   }
-  
- 	method lanzarGranada()
-  {
-  	if (cantidadDeGranadas >0){
-  		self.consumirGranadas(1)
-  		indicadorGranadas.actualizarValor(cantidadDeGranadas)
-  		const granada = new Granada(position = self.position())
-  		granada.lanzar(self.direccion())
-  		const ultimaGranada = nivelBichos.granadas().last()
-  		nivelBichos.granadas().remove(ultimaGranada)
-  		
-  		if (nivelBichos.granadas().isEmpty() and nivelBichos.bichos().size()>=1){
-  		nivelBichos.perder2()
-  		}
-  	}
+
+  method lanzarGranada() {
+    if (cantidadDeGranadas > 0) {
+      self.consumirGranadas(1)
+      indicadorGranadas.actualizarValor(cantidadDeGranadas)
+      const granada = new Granada(position = self.position())
+      granada.lanzar(self.direccion())
+      const ultimaGranada = nivelBichos.granadas().last()
+      nivelBichos.granadas().remove(ultimaGranada)
+      if (nivelBichos.granadas().isEmpty() and nivelBichos.bichos().size() >= 1) {
+        nivelBichos.perder2()
+      }
+    }
   }
 
 }
+

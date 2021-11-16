@@ -8,10 +8,10 @@ import nivel3.*
 
 object nivelDinero {
 
-  var property platita	
+  var property platita
 
   method configurate() {
-      // Fondo
+    // Fondo
     game.addVisual(new Fondo(image = "fondoNivel2.png"))
       // Indicador de Dinero
     game.addVisual(indicadorDinero.imagen())
@@ -31,13 +31,7 @@ object nivelDinero {
     game.addVisual(new Maletin(position = utilidadesParaJuego.posicionArbitraria()))
     game.addVisual(new Maletin(position = utilidadesParaJuego.posicionArbitraria()))
       // Elementos que otorgan Dinero
-    platita = 	[new Moneda(position = utilidadesParaJuego.posicionArbitraria()),
-    			new Moneda(position = utilidadesParaJuego.posicionArbitraria()),
-    			new Moneda(position = utilidadesParaJuego.posicionArbitraria()),
-    			new Billete(position = utilidadesParaJuego.posicionArbitraria()),
-    			new Billete(position = utilidadesParaJuego.posicionArbitraria()),
-    			new Billete(position = utilidadesParaJuego.posicionArbitraria())		
-    			]
+    platita = [ new Moneda(position = utilidadesParaJuego.posicionArbitraria()), new Moneda(position = utilidadesParaJuego.posicionArbitraria()), new Moneda(position = utilidadesParaJuego.posicionArbitraria()), new Billete(position = utilidadesParaJuego.posicionArbitraria()), new Billete(position = utilidadesParaJuego.posicionArbitraria()), new Billete(position = utilidadesParaJuego.posicionArbitraria()) ]
     platita.forEach({ p => game.addVisual(p)})
       // Willy
     game.addVisual(willy2)
@@ -50,14 +44,13 @@ object nivelDinero {
     keyboard.down().onPressDo{ willy2.irAbajo()}
     keyboard.left().onPressDo{ willy2.irIzquierda()}
     keyboard.right().onPressDo{ willy2.irDerecha()}
-	  // Para agilizar el avance en los niveles
+      // Para agilizar el avance en los niveles
     keyboard.g().onPressDo({ self.ganar()})
     keyboard.p().onPressDo({ self.perder()})
       // Para volver al nivel 1 DEBUGGING
     keyboard.v().onPressDo({ game.clear()
       nivelFlores.configurate()
     })
-
   }
 
   method salir() {
@@ -74,8 +67,7 @@ object nivelDinero {
     game.addVisual(new Fondo(image = "fondoCompletoNivel2.png"))
     game.schedule(500, { game.clear()
       game.addVisual(new Fondo(image = "FondoGanarNivel2.png"))
-      game.schedule(1500, { 
-        game.clear()
+      game.schedule(1500, { game.clear()
         nivelBichos.configurate()
       })
     })
@@ -89,6 +81,6 @@ object nivelDinero {
       game.schedule(2000, { game.stop()})
     })
   }
-  
+
 }
 

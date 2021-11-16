@@ -1,6 +1,5 @@
 import wollok.game.*
 import fondo.*
-import personajes.*
 import elementos.*
 import nivel2.*
 import utilidades.*
@@ -9,9 +8,9 @@ import willy.*
 object nivelFlores {
 
   var property flores
-  
+
   method configurate() {
-      // Fondo
+    // Fondo
     game.addVisual(new Fondo(image = "fondoNivel1.png"))
       // Indicador de Energía
     game.addVisual(indicadorEnergia.imagen())
@@ -35,14 +34,7 @@ object nivelFlores {
     game.addVisual(new Gaseosa(position = utilidadesParaJuego.posicionArbitraria()))
     game.addVisual(new Gaseosa(position = utilidadesParaJuego.posicionArbitraria()))
       // Flores - lista de flores agregadas al nivel
-    flores = [
-    	    new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_1.png"),
-            new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_2.png"), 
-            new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_3.png"),
-            new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_4.png"), 
-            new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_5.png"), 
-            new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_6.png")
-            ]
+    flores = [ new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_1.png"), new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_2.png"), new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_3.png"), new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_4.png"), new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_5.png"), new Flor(position = utilidadesParaJuego.posicionArbitraria(),image = "flor_6.png") ]
     flores.forEach({ f => game.addVisual(f)})
       // Elementos sorpresa
     game.addVisual(quitaEnergia)
@@ -60,7 +52,7 @@ object nivelFlores {
     keyboard.down().onPressDo{ willy.irAbajo()}
     keyboard.left().onPressDo{ willy.irIzquierda()}
     keyboard.right().onPressDo{ willy.irDerecha()}
-	  // para agilizar el avance en los niveles
+      // para agilizar el avance en los niveles
     keyboard.g().onPressDo({ self.ganar()})
     keyboard.p().onPressDo({ self.perder()})
   }
@@ -79,8 +71,7 @@ object nivelFlores {
     game.addVisual(new Fondo(image = "fondoCompletoNivel1.png"))
     game.schedule(1000, { game.clear()
       game.addVisual(new Fondo(image = "FondoGanarNivel1.png"))
-      game.schedule(2000, { 
-        game.clear()
+      game.schedule(2000, { game.clear()
         nivelDinero.configurate()
       })
     })
@@ -94,5 +85,6 @@ object nivelFlores {
       game.schedule(2000, { game.stop()})
     })
   }
+
 }
 

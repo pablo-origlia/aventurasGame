@@ -31,7 +31,7 @@ class Flor {
     }
     if (nivelFlores.flores().all{ f => f.estaBienPosicionada() }) {
       game.say(willy, "GANASTE!")
-      game.schedule(1000,{nivelFlores.ganar()})
+      game.schedule(1000, { nivelFlores.ganar()})
     }
   }
 
@@ -112,13 +112,11 @@ class Moneda inherits Elemento {
     willy2.aumentarDinero(self.cantidadQueOtorga())
     willy2.consumirSalud(20)
     nivelDinero.platita().remove(self)
-    
-    if (nivelDinero.platita().isEmpty()){
-    	game.addVisual(new Puerta(position = utilidadesParaJuego.posicionArbitraria()))
+    if (nivelDinero.platita().isEmpty()) {
+      game.addVisual(new Puerta(position = utilidadesParaJuego.posicionArbitraria()))
     }
     game.removeVisual(self)
-    
-   }
+  }
 
 }
 
@@ -138,95 +136,77 @@ class Puerta inherits Elemento {
 
   override method reaccionar(direccion) {
     game.say(willy2, "GANASTE!!!")
-    game.schedule(1000,{nivelDinero.ganar()})
+    game.schedule(1000, { nivelDinero.ganar()})
   }
 
 }
 
-
 class Granada inherits Elemento {
-  
+
   override method image() = "grenade.png"
-  
+
   override method cantidadQueOtorga() = 1
-  
+
   override method reaccionar(direccion) {
-	willy3.aumentarGranadas(self.cantidadQueOtorga())
+    willy3.aumentarGranadas(self.cantidadQueOtorga())
     game.removeVisual(self)
   }
-  
+
   override method puedePisarte(_) = true
-  
-  method posicionObjetivo(direccion){
-   	var direccionObjetivo = game.at(0,0)
-   	 
-   	 //Dir derecha
-  	if (direccion.opuesto() == derecha.opuesto()){
-  		if ((self.position().x() + 4) > game.width()-1){
-  			direccionObjetivo = game.at(game.width()-1,self.position().y())
-  		}
- 		else{
- 			direccionObjetivo = game.at(self.position().x()+4,self.position().y())
-  		}
-   	}
-   	 //Dir izquierda
-   	if (direccion.opuesto() == izquierda.opuesto()){
-  		if ((self.position().x() - 4) < 0 ){
-  			direccionObjetivo = game.at(0,self.position().y())
-  		}
- 		else{
- 			direccionObjetivo = game.at(self.position().x()-4,self.position().y())
-  		}
-  	
-  	}
-  	 //Dir arriba
-  	if (direccion.opuesto() == arriba.opuesto()){
-  		if ((self.position().y() + 4) > game.height()-2){
-  			direccionObjetivo = game.at(self.position().x(),game.height()-2)
-  		}
- 		else{
- 			direccionObjetivo = game.at(self.position().x(),self.position().y() + 4)
-  		}
-   	}
-   	
-   	 //Dir abajo
-  	if (direccion.opuesto() == abajo.opuesto()){
-  		if ((self.position().y() - 4) < 0){
-  			direccionObjetivo = game.at(self.position().x(),0)
-  		}
- 		else{
- 			direccionObjetivo = game.at(self.position().x(),self.position().y()-4)
-  		}
-   	}
-  	
-  	return direccionObjetivo
+
+  method posicionObjetivo(direccion) {
+    var direccionObjetivo = game.at(0, 0)
+      // Dir derecha
+    if (direccion.opuesto() == derecha.opuesto()) {
+      if ((self.position().x() + 4) > game.width() - 1) {
+        direccionObjetivo = game.at(game.width() - 1, self.position().y())
+      } else {
+        direccionObjetivo = game.at(self.position().x() + 4, self.position().y())
+      }
+    }
+      // Dir izquierda
+    if (direccion.opuesto() == izquierda.opuesto()) {
+      if ((self.position().x() - 4) < 0) {
+        direccionObjetivo = game.at(0, self.position().y())
+      } else {
+        direccionObjetivo = game.at(self.position().x() - 4, self.position().y())
+      }
+    }
+      // Dir arriba
+    if (direccion.opuesto() == arriba.opuesto()) {
+      if ((self.position().y() + 4) > game.height() - 2) {
+        direccionObjetivo = game.at(self.position().x(), game.height() - 2)
+      } else {
+        direccionObjetivo = game.at(self.position().x(), self.position().y() + 4)
+      }
+    }
+      // Dir abajo
+    if (direccion.opuesto() == abajo.opuesto()) {
+      if ((self.position().y() - 4) < 0) {
+        direccionObjetivo = game.at(self.position().x(), 0)
+      } else {
+        direccionObjetivo = game.at(self.position().x(), self.position().y() - 4)
+      }
+    }
+    return direccionObjetivo
   }
-  
-  method lanzar(direccion){
-  	const explosion = new Explosion(position = self.posicionObjetivo(direccion))
-  	game.addVisual(explosion)
-  	sonidoExplosion.play()
-  	
 
-  	
-  	if (nivelBichos.bichos().map({b=>b.position()}).filter({p=>p.x() == explosion.position().x()
-  		and p.y() == explosion.position().y()}).size()>0){
-  		
-  		//const bichoAEliminar = nivelBichos.bichos().find({b=>b.position().x() == explosion.position().x()
-  		//and b.position().y() == explosion.position().y()})
-  		const bichoAEliminar = nivelBichos.bichos().find({b=>b.position() == explosion.position()})
-   		nivelBichos.bichos().remove(bichoAEliminar)
-  		game.removeVisual(bichoAEliminar)
-  	}
-  	game.schedule(500,{game.removeVisual(explosion)})
-  	
-  	if (nivelBichos.bichos().isEmpty()){
-  		game.say(willy3,"GANASTE!")
-  		game.schedule(1000,{nivelBichos.ganar()})
-  		
-  	}
+  method lanzar(direccion) {
+    const explosion = new Explosion(position = self.posicionObjetivo(direccion))
+    game.addVisual(explosion)
+    sonidoExplosion.play()
+    if (nivelBichos.bichos().map({ b => b.position() }).filter({ p => p.x() == explosion.position().x() and p.y() == explosion.position().y() }).size() > 0) {
+      const bichoAEliminar = nivelBichos.bichos().find({ b => b.position() == explosion.position() })
+      nivelBichos.bichos().remove(bichoAEliminar)
+      game.removeVisual(bichoAEliminar)
+    }
+    game.schedule(500, { game.removeVisual(explosion)})
+    if (nivelBichos.bichos().isEmpty()) {
+      game.say(willy3, "GANASTE!")
+      game.schedule(1000, { nivelBichos.ganar()})
+    }
+  }
 
-   }
 }
 
 // Celdas sorpresa
@@ -397,28 +377,30 @@ class Bicho {
 
   const property image
   var property position
-  
-  method movete(){
-  	position = utilidadesParaJuego.posicionArbitraria2()
+
+  method movete() {
+    position = utilidadesParaJuego.posicionArbitraria2()
   }
-  
+
   method reaccionar(direccion) {
-  	willy3.consumirSalud(20)
- }
-  
+    willy3.consumirSalud(20)
+  }
 
 }
 
-class Explosion{
-	var property position
-	var property image = "explosion.png"
+class Explosion {
+
+  var property position
+  var property image = "explosion.png"
+
 }
 
 object sonidoExplosion {
-	
-	method play(){
-		game.sound("explosion.mp3").play()
-	}
+
+  method play() {
+    game.sound("explosion.mp3").play()
+  }
+
 }
 
 class Posicion {
