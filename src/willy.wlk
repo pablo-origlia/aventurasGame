@@ -15,6 +15,8 @@ object willy {
   var property cantidadDeGranadas = 0
   var property image = "playerRight.png"
 
+
+  
   method cambiarPosicion(pos) {
     self.position(pos)
   }
@@ -222,6 +224,8 @@ object willy3 {
   var property dinero = 150
   var property cantidadDeGranadas = 0
   var property image = "playerRight.png"
+  
+  method direccion() = direccion
 
   method cambiarPosicion(pos) {
     self.position(pos)
@@ -312,6 +316,28 @@ object willy3 {
   {
     cantidadDeGranadas = 999.min(cantidadDeGranadas + cantidad)
     indicadorGranadas.actualizarValor(cantidadDeGranadas)
+  }
+  
+    method consumirGranadas(cantidad)
+  {
+    cantidadDeGranadas = 0.max(cantidadDeGranadas - cantidad)
+    indicadorGranadas.actualizarValor(cantidadDeGranadas)
+  }
+  
+ 	method lanzarGranada()
+  {
+  	if (cantidadDeGranadas >0){
+  		self.consumirGranadas(1)
+  		indicadorGranadas.actualizarValor(cantidadDeGranadas)
+  		const granada = new Granada(position = self.position())
+  		granada.lanzar(self.direccion())
+  		const ultimaGranada = nivelBichos.granadas().last()
+  		nivelBichos.granadas().remove(ultimaGranada)
+  		
+  		if (nivelBichos.granadas().isEmpty() and nivelBichos.bichos().size()>=1){
+  		nivelBichos.perder2()
+  		}
+  	}
   }
 
 }

@@ -4,6 +4,7 @@ import utilidades.*
 import nivel1.*
 import nivel2.*
 import nivel3.*
+import direcciones.*
 
 object tierra {
 
@@ -156,9 +157,76 @@ class Granada inherits Elemento {
   
   override method puedePisarte(_) = true
   
-  method lanzar(){
-  	game.say(willy3,"HOLA")
-  }  
+  method posicionObjetivo(direccion){
+   	var direccionObjetivo = game.at(0,0)
+   	 
+   	 //Dir derecha
+  	if (direccion.opuesto() == derecha.opuesto()){
+  		if ((self.position().x() + 4) > game.width()-1){
+  			direccionObjetivo = game.at(game.width()-1,self.position().y())
+  		}
+ 		else{
+ 			direccionObjetivo = game.at(self.position().x()+4,self.position().y())
+  		}
+   	}
+   	 //Dir izquierda
+   	if (direccion.opuesto() == izquierda.opuesto()){
+  		if ((self.position().x() - 4) < 0 ){
+  			direccionObjetivo = game.at(0,self.position().y())
+  		}
+ 		else{
+ 			direccionObjetivo = game.at(self.position().x()-4,self.position().y())
+  		}
+  	
+  	}
+  	 //Dir arriba
+  	if (direccion.opuesto() == arriba.opuesto()){
+  		if ((self.position().y() + 4) > game.height()-2){
+  			direccionObjetivo = game.at(self.position().x(),game.height()-2)
+  		}
+ 		else{
+ 			direccionObjetivo = game.at(self.position().x(),self.position().y() + 4)
+  		}
+   	}
+   	
+   	 //Dir abajo
+  	if (direccion.opuesto() == abajo.opuesto()){
+  		if ((self.position().y() - 4) < 0){
+  			direccionObjetivo = game.at(self.position().x(),0)
+  		}
+ 		else{
+ 			direccionObjetivo = game.at(self.position().x(),self.position().y()-4)
+  		}
+   	}
+  	
+  	return direccionObjetivo
+  }
+  
+  method lanzar(direccion){
+  	const explosion = new Explosion(position = self.posicionObjetivo(direccion))
+  	game.addVisual(explosion)
+  	sonidoExplosion.play()
+  	
+
+  	
+  	if (nivelBichos.bichos().map({b=>b.position()}).filter({p=>p.x() == explosion.position().x()
+  		and p.y() == explosion.position().y()}).size()>0){
+  		
+  		//const bichoAEliminar = nivelBichos.bichos().find({b=>b.position().x() == explosion.position().x()
+  		//and b.position().y() == explosion.position().y()})
+  		const bichoAEliminar = nivelBichos.bichos().find({b=>b.position() == explosion.position()})
+   		nivelBichos.bichos().remove(bichoAEliminar)
+  		game.removeVisual(bichoAEliminar)
+  	}
+  	game.schedule(500,{game.removeVisual(explosion)})
+  	
+  	if (nivelBichos.bichos().isEmpty()){
+  		game.say(willy3,"GANASTE!")
+  		game.schedule(1000,{nivelBichos.ganar()})
+  		
+  	}
+
+   }
 }
 
 // Celdas sorpresa
@@ -335,14 +403,23 @@ class Bicho {
   }
   
   method reaccionar(direccion) {
-  willy3.consumirSalud(20)
-  game.removeVisual(self)
-  nivelBichos.bichos().remove(self)
-  }
+  	willy3.consumirSalud(20)
+ }
   
 
 }
 
+class Explosion{
+	var property position
+	var property image = "explosion.png"
+}
+
+object sonidoExplosion {
+	
+	method play(){
+		game.sound("explosion.mp3").play()
+	}
+}
 
 class Posicion {
 

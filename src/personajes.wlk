@@ -357,12 +357,12 @@ object personajeNivel3 {
 
 
 // Esto de prueba nada mas por ahora.
-class Bicho {
+/*class Bicho {
 
   var property position
   const property image
 
-}
+}*/
 /* 
 var bicho1 = new Bicho(position = game.at(1, 4), image = "bug_1.png")
 

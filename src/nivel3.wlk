@@ -9,6 +9,7 @@ import nivel2.*
 object nivelBichos {
 	
 	var property bichos = []
+	var property granadas = []
 
 method configurate() {
 	  //Fondo
@@ -34,6 +35,19 @@ method configurate() {
 	bichos.forEach({ b => game.addVisual(b)})
 	
 		//Granadas
+		
+	granadas = [	new Granada(position = utilidadesParaJuego.posicionArbitraria()),
+					new Granada(position = utilidadesParaJuego.posicionArbitraria()),
+					new Granada(position = utilidadesParaJuego.posicionArbitraria()),
+					new Granada(position = utilidadesParaJuego.posicionArbitraria()),
+					new Granada(position = utilidadesParaJuego.posicionArbitraria()),
+					new Granada(position = utilidadesParaJuego.posicionArbitraria()),
+					new Granada(position = utilidadesParaJuego.posicionArbitraria()),
+					new Granada(position = utilidadesParaJuego.posicionArbitraria()),
+					new Granada(position = utilidadesParaJuego.posicionArbitraria()),
+					new Granada(position = utilidadesParaJuego.posicionArbitraria())
+	]
+	/*game.addVisual(new Granada(position = utilidadesParaJuego.posicionArbitraria()))
 	game.addVisual(new Granada(position = utilidadesParaJuego.posicionArbitraria()))
 	game.addVisual(new Granada(position = utilidadesParaJuego.posicionArbitraria()))
 	game.addVisual(new Granada(position = utilidadesParaJuego.posicionArbitraria()))
@@ -42,23 +56,23 @@ method configurate() {
 	game.addVisual(new Granada(position = utilidadesParaJuego.posicionArbitraria()))
 	game.addVisual(new Granada(position = utilidadesParaJuego.posicionArbitraria()))
 	game.addVisual(new Granada(position = utilidadesParaJuego.posicionArbitraria()))
-	game.addVisual(new Granada(position = utilidadesParaJuego.posicionArbitraria()))
-	game.addVisual(new Granada(position = utilidadesParaJuego.posicionArbitraria()))
+	game.addVisual(new Granada(position = utilidadesParaJuego.posicionArbitraria()))*/
+	
+	granadas.forEach({ g => game.addVisual(g)})
 	  //Personaje
 	game.addVisual(willy3)
 	game.say(willy3, "¡Matemos a todos los bichos!")
 	  // Colisiones
     game.onCollideDo(willy3, { e => willy3.manipular(e)})
    	  //Eventos Automáticos  
-   	game.onTick(3000, "movimiento", {bichos.forEach({ b => b.movete()})})
+   	game.onTick(10000, "movimiento", {bichos.forEach({ b => b.movete()})})
 	  // Teclado
-	keyboard.any().onPressDo{ self.comprobarSiGano()}
-
 	keyboard.s().onPressDo({ self.salir()})
     keyboard.up().onPressDo{ willy3.irArriba()}
     keyboard.down().onPressDo{ willy3.irAbajo()}
     keyboard.left().onPressDo{ willy3.irIzquierda()}
     keyboard.right().onPressDo{ willy3.irDerecha()}
+    keyboard.space().onPressDo{ willy3.lanzarGranada()}
 	  // Para agilizar el avance en los niveles
 	keyboard.g().onPressDo({ self.ganar() })
 	keyboard.p().onPressDo({ self.perder() })
@@ -83,10 +97,10 @@ method configurate() {
 	method ganar() {
 		game.clear()
 		game.addVisual(new Fondo(image="fondoCompletoNivel3.png"))
-		game.schedule(1000, {
+		game.schedule(500, {
 			game.clear()
 			game.addVisual(new Fondo(image="fondoGanarNivel3.png"))
-			game.schedule(2000, {
+			game.schedule(1500, {
 			game.stop()
 			})
 		})
@@ -104,11 +118,16 @@ method configurate() {
 		})
 	}
 	
-	method comprobarSiGano(){
-		if (bichos.isEmpty() and willy3.salud() > 0){
-			game.say(willy3, "GANASTE!")
-			self.ganar()
-		}
+	method perder2(){
+		game.schedule(500,{game.clear()})
+		game.addVisual(new Fondo(image="fondoCompletoNivel3.png"))
+		game.schedule(500, {
+			game.clear()
+			game.addVisual(new Fondo(image="fondoPerderNivel3_2.png"))
+			game.schedule(2000, {
+			game.stop()
+			})
+		})
 	}
 	
 }

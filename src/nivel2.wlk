@@ -27,10 +27,14 @@ object nivelDinero {
     indicadorSalud.actualizarValor(willy2.salud())
       // Elementos que otorgan Salud
     game.addVisual(new Curita(position = utilidadesParaJuego.posicionArbitraria()))
+    game.addVisual(new Curita(position = utilidadesParaJuego.posicionArbitraria()))
+    game.addVisual(new Maletin(position = utilidadesParaJuego.posicionArbitraria()))
     game.addVisual(new Maletin(position = utilidadesParaJuego.posicionArbitraria()))
       // Elementos que otorgan Dinero
     platita = 	[new Moneda(position = utilidadesParaJuego.posicionArbitraria()),
     			new Moneda(position = utilidadesParaJuego.posicionArbitraria()),
+    			new Moneda(position = utilidadesParaJuego.posicionArbitraria()),
+    			new Billete(position = utilidadesParaJuego.posicionArbitraria()),
     			new Billete(position = utilidadesParaJuego.posicionArbitraria()),
     			new Billete(position = utilidadesParaJuego.posicionArbitraria())		
     			]
@@ -59,7 +63,7 @@ object nivelDinero {
   method salir() {
     game.clear()
     game.addVisual(new Fondo(image = "fondoCompletoNivel2.png"))
-    game.schedule(1000, { game.clear()
+    game.schedule(500, { game.clear()
       game.addVisual(new Fondo(image = "fondoSalirNivel2.png"))
       game.schedule(2000, { game.stop()})
     })
@@ -68,9 +72,9 @@ object nivelDinero {
   method ganar() {
     game.clear()
     game.addVisual(new Fondo(image = "fondoCompletoNivel2.png"))
-    game.schedule(1000, { game.clear()
+    game.schedule(500, { game.clear()
       game.addVisual(new Fondo(image = "FondoGanarNivel2.png"))
-      game.schedule(2000, { 
+      game.schedule(1500, { 
         game.clear()
         nivelBichos.configurate()
       })
